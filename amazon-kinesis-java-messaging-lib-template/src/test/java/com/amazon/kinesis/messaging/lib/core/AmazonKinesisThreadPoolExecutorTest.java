@@ -16,9 +16,10 @@
 
 package com.amazon.kinesis.messaging.lib.core;
 
-import static org.assertj.core.api.Assertions.catchThrowableOfType;
+import static org.awaitility.Awaitility.await;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -46,11 +47,7 @@ class AmazonKinesisThreadPoolExecutorTest {
 
     for(int i = 0; i < 300; i++) {
       amazonKinesisThreadPoolExecutor.execute(() -> {
-        try {
-          Thread.sleep(1);
-        } catch (final InterruptedException e) {
-          e.printStackTrace();
-        }
+        await().pollDelay(1, TimeUnit.MILLISECONDS).until(() -> true);
       });
     }
 
@@ -95,11 +92,7 @@ class AmazonKinesisThreadPoolExecutorTest {
     for(int i = 0; i < 10; i++) {
       amazonKinesisThreadPoolExecutor.execute(() -> {
         while(true) {
-          try {
-            Thread.sleep(1);
-          } catch (final InterruptedException e) {
-            e.printStackTrace();
-          }
+          await().pollDelay(1, TimeUnit.MILLISECONDS).until(() -> true);
         }
       });
     }
@@ -121,15 +114,11 @@ class AmazonKinesisThreadPoolExecutorTest {
 
     amazonKinesisThreadPoolExecutor.execute(() -> {
       while(true) {
-        try {
-          Thread.sleep(1);
-        } catch (final InterruptedException e) {
-          e.printStackTrace();
-        }
+        await().pollDelay(1, TimeUnit.MILLISECONDS).until(() -> true);
       }
     });
 
-    catchThrowableOfType(() -> amazonKinesisThreadPoolExecutor.execute(() -> { }), RejectedExecutionException.class);
+    assertThrows(RejectedExecutionException.class, () -> amazonKinesisThreadPoolExecutor.execute(() -> { }));
   }
 
 }

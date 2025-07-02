@@ -16,6 +16,7 @@
 
 package com.amazon.kinesis.messaging.lib.core;
 
+import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -31,6 +32,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -249,11 +251,11 @@ class AmazonSnsProducerTest {
         .streamArn("arn:aws:kinesis:us-east-2:000000000000:stream/mystream")
         .build();
 
-    final AmazonKinesisTemplate<Object> kinesisTemplate = new AmazonKinesisTemplate<>(amazonKinesis, streamProperty);
+    kinesisTemplate = new AmazonKinesisTemplate<>(amazonKinesis, streamProperty);
 
     when(amazonKinesis.putRecords(any(PutRecordsRequest.class))).thenAnswer(invocation -> {
       while (true) {
-        Thread.sleep(1);
+        await().pollDelay(1, TimeUnit.MILLISECONDS).until(() -> true);
       }
     });
 
