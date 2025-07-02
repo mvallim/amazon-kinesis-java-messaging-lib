@@ -16,7 +16,7 @@ jobs:
         with:
           java-version: 8
           distribution: 'corretto'
-          server-id: nexus-release
+          server-id: sonatype-central
           server-username: OSSRH_USERNAME
           server-password: OSSRH_TOKEN
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -27,7 +27,7 @@ jobs:
           git config user.name "GitHub Actions"
 
       - name: Publish Release to the Maven Central Repository
-        run: mvn -B clean release:prepare release:perform -P nexus-release
+        run: mvn -B clean release:prepare release:perform -P sonatype-central
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
