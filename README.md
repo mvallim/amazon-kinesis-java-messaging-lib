@@ -1,4 +1,4 @@
-# Amazon SNS Java Messaging Lib
+# Amazon Kinesis Java Messaging Lib
 
 ![Java CI with Maven](https://github.com/mvallim/amazon-kinesis-java-messaging-lib/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=amazon-kinesis-java-messaging-lib&metric=alert_status)](https://sonarcloud.io/dashboard?id=amazon-kinesis-java-messaging-lib)
@@ -6,7 +6,7 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.mvallim/amazon-kinesis-java-messaging-lib/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mvallim/amazon-kinesis-java-messaging-lib)
 [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-The Amazon SNS Java Messaging Library holds the compatible classes, that are used for communicating with Amazon Simple Notification Service. This project builds on top of the AWS SDK for Java to use Amazon SNS provider for the messaging applications without running any additional software.
+The Amazon Kinesis Java Messaging Library holds the compatible classes, that are used for communicating with Amazon Kinesis Service. This project builds on top of the AWS SDK for Java to use Amazon Kinesis provider for the messaging applications without running any additional software.
 
 > The batch size should be chosen based on the size of individual messages and available network bandwidth as well as the observed latency and throughput improvements based on the real life load. These are configured to some sensible defaults assuming smaller message sizes and the optimal batch size for server side processing.
 
@@ -28,11 +28,12 @@ This library supports **`Kotlin`** aswell
 
 ## 1.1 Prerequisite
 
-In order to use Amazon SNS Java Messaging Lib within a Maven project, simply add the following dependency to your pom.xml. There are no other dependencies for Amazon SNS Java Messaging Lib, which means other unwanted libraries will not overwhelm your project.
+In order to use Amazon Kinesis Java Messaging Lib within a Maven project, simply add the following dependency to your pom.xml. There are no other dependencies for Amazon Kinesis Java Messaging Lib, which means other unwanted libraries will not overwhelm your project.
 
 You can pull it from the central Maven repositories:
 
 ### For AWS SDK v1
+
 ```xml
 <dependency>
     <groupId>com.github.mvallim</groupId>
@@ -42,6 +43,7 @@ You can pull it from the central Maven repositories:
 ```
 
 ### For AWS SDK v2
+
 ```xml
 <dependency>
     <groupId>com.github.mvallim</groupId>
@@ -66,11 +68,13 @@ If you want to try a snapshot version, add the following repository:
 #### Gradle
 
 ### For AWS SDK v1
+
 ```groovy
 implementation 'com.github.mvallim:amazon-kinesis-java-messaging-lib-v1:1.0.0'
 ```
 
 ### For AWS SDK v2
+
 ```groovy
 implementation 'com.github.mvallim:amazon-kinesis-java-messaging-lib-v2:1.0.0'
 ```
@@ -87,186 +91,142 @@ repositories {
 
 ## 1.2 Usage
 
-### Properties `TopicProperty`
+### Properties `StreamProperty`
 
 | Property              | Type        | Description                                                                    |
 |-----------------------|-------------|--------------------------------------------------------------------------------|
-| **`fifo`**            | **boolean** | refers if SNS is fifo or not.                                                  |
-| **`maximumPoolSize`** | **int**     | refers maximum threads for producer.                                           |
-| **`topicArn`**        | **string**  | refers topic arn name.                                                         |
-| **`linger`**          | **int**     | refers to the time to wait before sending messages out to SNS.                 |
+| **`streamArn`**       | **string**  | refers stream arn name.                                                        |
+| **`linger`**          | **int**     | refers to the time to wait before sending messages out to Kinesis.             |
 | **`maxBatchSize`**    | **int**     | refers to the maximum amount of data to be collected before sending the batch. |
 
-**NOTICE**: the buffer of message store in memory is calculate using **`maximumPoolSize`** * **`maxBatchSize`** huge values demand huge memory.
+**NOTICE**: the buffer of message store in memory is calculate using **`maxBatchSize`** huge values demand huge memory.
 
 #### Determining the type of `BlockingQueue` with its maximum capacity
 
 ```java
-final TopicProperty topicProperty = TopicProperty.builder()
-  .fifo(false)
+final StreamProperty streamProperty = StreamProperty.builder()
   .linger(100)
   .maxBatchSize(10)
-  .maximumPoolSize(20)
-  .topicArn("arn:aws:sns:us-east-2:000000000000:topic")
+  .streamArn("arn:aws:kinesis:us-east-2:000000000000:stream/mystream")
   .build();
   
-final AmazonSnsTemplate<MyMessage> snsTemplate = new AmazonSnsTemplate<>(
-	amazonSNS, topicProperty, new LinkedBlockingQueue<>(100));
+final AmazonKinesisTemplate<MyMessage> kinesisTemplate = new AmazonKinesisTemplate<>(
+  amazonKinesis, streamProperty, new LinkedBlockingQueue<>(100));
 ```
 
 #### Using an `ObjectMapper` other than the default
 
 ```java
-final TopicProperty topicProperty = TopicProperty.builder()
-  .fifo(false)
+final StreamProperty streamProperty = StreamProperty.builder()
   .linger(100)
   .maxBatchSize(10)
-  .maximumPoolSize(20)
-  .topicArn("arn:aws:sns:us-east-2:000000000000:topic")
+  .streamArn("arn:aws:kinesis:us-east-2:000000000000:stream/mystream")
   .build();
   
-final AmazonSnsTemplate<MyMessage> snsTemplate = new AmazonSnsTemplate<>(
-	amazonSNS, topicProperty, new ObjectMapper<>());
+final AmazonKinesisTemplate<MyMessage> kinesisTemplate = new AmazonKinesisTemplate<>(
+  amazonKinesis, streamProperty, new ObjectMapper<>());
 ```
 
 #### Using an `ObjectMapper` and a `BlockingQueue` other than the default
 
 ```java
-final TopicProperty topicProperty = TopicProperty.builder()
-  .fifo(false)
+final StreamProperty streamProperty = StreamProperty.builder()
   .linger(100)
   .maxBatchSize(10)
-  .maximumPoolSize(20)
-  .topicArn("arn:aws:sns:us-east-2:000000000000:topic")
+  .streamArn("arn:aws:kinesis:us-east-2:000000000000:stream/mystream")
   .build();
   
-final AmazonSnsTemplate<MyMessage> snsTemplate = new AmazonSnsTemplate<>(
-	amazonSNS, topicProperty, new LinkedBlockingQueue<>(100), new ObjectMapper<>());
+final AmazonKinesisTemplate<MyMessage> kinesisTemplate = new AmazonKinesisTemplate<>(
+  amazamazonKinesis, streamProperty, new LinkedBlockingQueue<>(100), new ObjectMapper<>());
 ```
 
-### Standard SNS
+### Kinesis
+
 ```java
-final TopicProperty topicProperty = TopicProperty.builder()
-  .fifo(false)
+final StreamProperty StreamProperty = StreamProperty.builder()
   .linger(100)
   .maxBatchSize(10)
-  .maximumPoolSize(20)
-  .topicArn("arn:aws:sns:us-east-2:000000000000:topic")
+  .streamArn("arn:aws:kinesis:us-east-2:000000000000:stream/mystream")
   .build();
 
-final AmazonSnsTemplate<MyMessage> snsTemplate = new AmazonSnsTemplate<>(amazonSNS, topicProperty);
+final AmazonKinesisTemplate<MyMessage> kinesisTemplate = new AmazonKinesisTemplate<>(amazonSNS, streamProperty);
 
 final RequestEntry<MyMessage> requestEntry = RequestEntry.builder()
   .withValue(new MyMessage())
-  .withMessageHeaders(Map.of())
   .build();
 
-snsTemplate.send(requestEntry);
-```
-
-### FIFO SNS
-```java
-final TopicProperty topicProperty = TopicProperty.builder()
-  .fifo(true)
-  .linger(100)
-  .maxBatchSize(10)
-  .maximumPoolSize(20)
-  .topicArn("arn:aws:sns:us-east-2:000000000000:topic")
-  .build();
-
-final AmazonSnsTemplate<MyMessage> snsTemplate = new AmazonSnsTemplate<>(amazonSNS, topicProperty);
-
-final RequestEntry<MyMessage> requestEntry = RequestEntry.builder()
-  .withValue(new MyMessage())
-  .withMessageHeaders(Map.of())
-  .withGroupId(UUID.randomUUID().toString())
-  .withDeduplicationId(UUID.randomUUID().toString())
-  .build();
-
-snsTemplate.send(requestEntry);
+kinesisTemplate.send(requestEntry);
 ```
 
 ### Send With Callback
+
 ```java
-final TopicProperty topicProperty = TopicProperty.builder()
-  .fifo(true)
+final StreamProperty streamProperty = StreamProperty.builder()
   .linger(100)
   .maxBatchSize(10)
-  .maximumPoolSize(20)
-  .topicArn("arn:aws:sns:us-east-2:000000000000:topic")
+  .streamArn("arn:aws:kinesis:us-east-2:000000000000:stream/mystream")
   .build();
 
-final AmazonSnsTemplate<MyMessage> snsTemplate = new AmazonSnsTemplate<>(amazonSNS, topicProperty);
+final AmazonKinesisTemplate<MyMessage> kinesisTemplate = new AmazonKinesisTemplate<>(amazonSNS, streamProperty);
 
 final RequestEntry<MyMessage> requestEntry = RequestEntry.builder()
   .withValue(new MyMessage())
-  .withMessageHeaders(Map.of())
-  .withGroupId(UUID.randomUUID().toString())
-  .withDeduplicationId(UUID.randomUUID().toString())
   .build();
 
-snsTemplate.send(requestEntry).addCallback(result -> {
+kinesisTemplate.send(requestEntry).addCallback(result -> {
   successCallback -> LOGGER.info("{}", successCallback), 
   failureCallback -> LOGGER.error("{}", failureCallback)
 });
 
-snsTemplate.send(requestEntry).addCallback(result -> {
+kinesisTemplate.send(requestEntry).addCallback(result -> {
   successCallback -> LOGGER.info("{}", successCallback)
 });
 ```
 
 ### Send And Wait
+
 ```java
-final TopicProperty topicProperty = TopicProperty.builder()
-  .fifo(true)
+final StreamProperty streamProperty = StreamProperty.builder()
   .linger(100)
   .maxBatchSize(10)
-  .maximumPoolSize(20)
-  .topicArn("arn:aws:sns:us-east-2:000000000000:topic")
+  .streamArn("arn:aws:kinesis:us-east-2:000000000000:stream/mystream")
   .build();
 
-final AmazonSnsTemplate<MyMessage> snsTemplate = new AmazonSnsTemplate<>(amazonSNS, topicProperty);
+final AmazonKinesisTemplate<MyMessage> kinesisTemplate = new AmazonKinesisTemplate<>(amazonSNS, streamProperty);
 
 final RequestEntry<MyMessage> requestEntry = RequestEntry.builder()
   .withValue(new MyMessage())
-  .withMessageHeaders(Map.of())
-  .withGroupId(UUID.randomUUID().toString())
-  .withDeduplicationId(UUID.randomUUID().toString())
   .build();
 
-snsTemplate.send(requestEntry).addCallback(result -> {
+kinesisTemplate.send(requestEntry).addCallback(result -> {
   successCallback -> LOGGER.info("{}", successCallback), 
   failureCallback -> LOGGER.error("{}", failureCallback)
 });
 
-snsTemplate.await().join();
+kinesisTemplate.await().join();
 ```
 
 ### Send And Shutdown
+
 ```java
-final TopicProperty topicProperty = TopicProperty.builder()
-  .fifo(true)
+final StreamProperty streamProperty = StreamProperty.builder()
   .linger(100)
   .maxBatchSize(10)
-  .maximumPoolSize(20)
-  .topicArn("arn:aws:sns:us-east-2:000000000000:topic")
+  .streamArn("arn:aws:kinesis:us-east-2:000000000000:stream/mystream")
   .build();
 
-final AmazonSnsTemplate<MyMessage> snsTemplate = new AmazonSnsTemplate<>(amazonSNS, topicProperty);
+final AmazonKinesisTemplate<MyMessage> kinesisTemplate = new AmazonKinesisTemplate<>(amazonSNS, streamProperty);
 
 final RequestEntry<MyMessage> requestEntry = RequestEntry.builder()
   .withValue(new MyMessage())
-  .withMessageHeaders(Map.of())
-  .withGroupId(UUID.randomUUID().toString())
-  .withDeduplicationId(UUID.randomUUID().toString())
   .build();
 
-snsTemplate.send(requestEntry).addCallback(result -> {
+kinesisTemplate.send(requestEntry).addCallback(result -> {
   successCallback -> LOGGER.info("{}", successCallback), 
   failureCallback -> LOGGER.error("{}", failureCallback)
 });
 
-snsTemplate.shutdown();
+kinesisTemplate.shutdown();
 ```
 
 ## Contributing
