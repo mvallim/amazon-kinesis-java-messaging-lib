@@ -18,10 +18,10 @@ package com.amazon.kinesis.messaging.lib.core;
 
 import java.util.concurrent.CompletableFuture;
 
-import com.amazon.kinesis.messaging.lib.model.StreamProperty;
 import com.amazon.kinesis.messaging.lib.model.RequestEntry;
 import com.amazon.kinesis.messaging.lib.model.ResponseFailEntry;
 import com.amazon.kinesis.messaging.lib.model.ResponseSuccessEntry;
+import com.amazon.kinesis.messaging.lib.model.StreamProperty;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

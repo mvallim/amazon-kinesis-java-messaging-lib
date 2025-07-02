@@ -29,10 +29,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.amazon.kinesis.messaging.lib.core.RequestEntryInternalFactory.RequestEntryInternal;
-import com.amazon.kinesis.messaging.lib.model.StreamProperty;
 import com.amazon.kinesis.messaging.lib.model.RequestEntry;
 import com.amazon.kinesis.messaging.lib.model.ResponseFailEntry;
 import com.amazon.kinesis.messaging.lib.model.ResponseSuccessEntry;
+import com.amazon.kinesis.messaging.lib.model.StreamProperty;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.kinesis.AmazonKinesis;
 import com.amazonaws.services.kinesis.model.PutRecordsRequest;

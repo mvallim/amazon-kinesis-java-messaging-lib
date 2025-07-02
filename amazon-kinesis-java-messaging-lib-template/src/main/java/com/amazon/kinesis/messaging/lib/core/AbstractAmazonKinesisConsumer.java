@@ -38,9 +38,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.amazon.kinesis.messaging.lib.core.RequestEntryInternalFactory.RequestEntryInternal;
-import com.amazon.kinesis.messaging.lib.model.StreamProperty;
 import com.amazon.kinesis.messaging.lib.model.PublishRequestBuilder;
 import com.amazon.kinesis.messaging.lib.model.RequestEntry;
+import com.amazon.kinesis.messaging.lib.model.StreamProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.SneakyThrows;

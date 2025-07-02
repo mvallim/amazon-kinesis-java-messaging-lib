@@ -25,8 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
 
-import com.amazon.kinesis.messaging.lib.core.AmazonKinesisThreadPoolExecutor;
-
 // @formatter:off
 class AmazonKinesisThreadPoolExecutorTest {
 

@@ -35,7 +35,6 @@ import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
-import com.amazon.kinesis.messaging.lib.concurrent.RingBufferBlockingQueue;
 import com.amazon.kinesis.messaging.lib.model.RequestEntry;
 
 @SuppressWarnings({ "java:S2925", "java:S5778" })
