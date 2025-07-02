@@ -9,6 +9,9 @@ on:
 permissions:
   contents: read
   packages: write
+  actions: read
+  security-events: write
+  pull-requests: write
 
 jobs:
   snapshot:
