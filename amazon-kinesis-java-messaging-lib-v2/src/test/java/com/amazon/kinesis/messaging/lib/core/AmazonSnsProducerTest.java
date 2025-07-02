@@ -27,6 +27,7 @@ import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -91,7 +92,7 @@ class AmazonSnsProducerTest {
       .build();
 
     final PutRecordsResponse putRecordsResponse = PutRecordsResponse.builder()
-      .records(List.of(publishBatchResultEntry))
+      .records(Collections.singleton(publishBatchResultEntry))
       .build();
 
     when(amazonKinesis.putRecords(any(PutRecordsRequest.class))).thenReturn(putRecordsResponse);
@@ -117,7 +118,7 @@ class AmazonSnsProducerTest {
       .build();
 
     final PutRecordsResponse putRecordsResponse = PutRecordsResponse.builder()
-      .records(List.of(publishBatchResultEntry))
+      .records(Collections.singleton(publishBatchResultEntry))
       .build();
 
     when(amazonKinesis.putRecords(any(PutRecordsRequest.class))).thenReturn(putRecordsResponse);

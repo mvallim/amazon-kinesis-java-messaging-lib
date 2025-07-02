@@ -27,6 +27,7 @@ import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -86,7 +87,7 @@ class AmazonKinesisProducerTest {
     publishBatchResultEntry.setSequenceNumber("012345678901234567890");
 
     final PutRecordsResult publishBatchResult = new PutRecordsResult();
-    publishBatchResult.setRecords(List.of(publishBatchResultEntry));
+    publishBatchResult.setRecords(Collections.singleton(publishBatchResultEntry));
 
     when(amazonKinesis.putRecords(any())).thenReturn(publishBatchResult);
 
@@ -110,7 +111,7 @@ class AmazonKinesisProducerTest {
     publishBatchResultEntry.setErrorMessage("ErrorMessage");
 
     final PutRecordsResult publishBatchResult = new PutRecordsResult();
-    publishBatchResult.setRecords(List.of(publishBatchResultEntry));
+    publishBatchResult.setRecords(Collections.singleton(publishBatchResultEntry));
 
     when(amazonKinesis.putRecords(any())).thenReturn(publishBatchResult);
 
