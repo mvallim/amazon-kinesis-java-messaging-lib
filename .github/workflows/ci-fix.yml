@@ -3,7 +3,6 @@ name: Build and Pull Request
 on:
   push:
     branches:
-    - feature**
     - fix**
     paths-ignore:
     - "**/README.md"
@@ -30,6 +29,9 @@ jobs:
   
   pull-request:
     uses: ./.github/workflows/ci-pull-request.yml
-    if: success()
     needs: gates
     secrets: inherit
+    with:
+      type: Fix
+      labels: automatic,fix
+      target-branch: develop
