@@ -57,6 +57,7 @@ import software.amazon.awssdk.services.kinesis.model.PutRecordsResponse;
 import software.amazon.awssdk.services.kinesis.model.PutRecordsResultEntry;
 
 // @formatter:off
+@SuppressWarnings("java:S6204")
 @ExtendWith(MockitoExtension.class)
 class AmazonSnsProducerTest {
 
@@ -72,7 +73,7 @@ class AmazonSnsProducerTest {
   private ArgumentCaptor<ResponseFailEntry> argumentCaptorFailure;
 
   @BeforeEach
-  void before() throws Exception {
+  void before() {
     final StreamProperty streamProperty = StreamProperty.builder()
       .linger(50L)
       .maxBatchSize(10)

@@ -116,7 +116,7 @@ class AmazonKinesisThreadPoolExecutorTest {
   }
 
   @Test
-  void testSuccessBlockingSubmissionPolicy() throws InterruptedException {
+  void testSuccessBlockingSubmissionPolicy() {
     final AmazonKinesisThreadPoolExecutor amazonKinesisThreadPoolExecutor = new AmazonKinesisThreadPoolExecutor(1);
 
     amazonKinesisThreadPoolExecutor.execute(() -> {

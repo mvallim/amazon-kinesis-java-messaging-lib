@@ -55,6 +55,7 @@ import com.amazonaws.services.kinesis.model.PutRecordsResult;
 import com.amazonaws.services.kinesis.model.PutRecordsResultEntry;
 
 // @formatter:off
+@SuppressWarnings("java:S6204")
 @ExtendWith(MockitoExtension.class)
 class AmazonKinesisProducerTest {
 
@@ -255,7 +256,7 @@ class AmazonKinesisProducerTest {
     }));
 
     entries(2).forEach(entry -> {
-      kinesisTemplate.send(entry).addCallback(null, failureCallback);;
+      kinesisTemplate.send(entry).addCallback(null, failureCallback);
     });
 
     verify(failureCallback, timeout(40000).times(1)).accept(any());
