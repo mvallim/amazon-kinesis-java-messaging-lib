@@ -70,7 +70,7 @@ class AmazonKinesisProducerTest {
   private ArgumentCaptor<ResponseFailEntry> argumentCaptorFailure;
 
   @BeforeEach
-  public void before() throws Exception {
+  void before() {
     final StreamProperty streamProperty = StreamProperty.builder()
       .linger(50L)
       .maxBatchSize(10)

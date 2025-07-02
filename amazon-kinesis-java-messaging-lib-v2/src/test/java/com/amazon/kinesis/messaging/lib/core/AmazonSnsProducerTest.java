@@ -72,7 +72,7 @@ class AmazonSnsProducerTest {
   private ArgumentCaptor<ResponseFailEntry> argumentCaptorFailure;
 
   @BeforeEach
-  public void before() throws Exception {
+  void before() throws Exception {
     final StreamProperty streamProperty = StreamProperty.builder()
       .linger(50L)
       .maxBatchSize(10)
@@ -261,7 +261,7 @@ class AmazonSnsProducerTest {
     }));
 
     entries(2).forEach(entry -> {
-      kinesisTemplate.send(entry).addCallback(null, failureCallback);;
+      kinesisTemplate.send(entry).addCallback(null, failureCallback);
     });
 
     verify(failureCallback, timeout(40000).times(1)).accept(any());
