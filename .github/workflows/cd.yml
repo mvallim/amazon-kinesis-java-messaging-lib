@@ -14,35 +14,45 @@ permissions:
   pull-requests: write
 
 env:
-  type: ${{ startsWith(github.ref, 'refs/heads/develop') && 'snapshot' || 'release'}}
+  TYPE: ${{ startsWith(github.ref, 'refs/heads/develop') && 'snapshot' || 'release'}}
 
 jobs:
+  set-outputs:
+    runs-on: ubuntu-latest
+    outputs:
+      type: ${{ steps.environment.outputs.type }}
+    steps:
+      - id: environment
+        name: Set output environment passed to the reusable workflow
+        run: |
+          echo "type=$TYPE" >> $GITHUB_OUTPUT
+          
   ci:
     uses: ./.github/workflows/ci-maven.yml
     secrets: inherit
 
   gates:
-    uses: ./.github/workflows/ci-gates.yml
-    if: success()
     needs: ci
+    if: success()
+    uses: ./.github/workflows/ci-gates.yml
     secrets: inherit
 
   snapshot:
-    if: ${{ env.type == 'snapshot' }}
-    needs: gates
+    needs: [gates, set-outputs]
+    if: ${{ needs.set-outputs.outputs.type == 'snapshot' }}
     uses: ./.github/workflows/cd-snapshot.yml
     secrets: inherit
 
   release:
-    if: ${{ env.type == 'release' }}
-    needs: gates
+    needs: [gates, set-outputs]
+    if: ${{ needs.set-outputs.outputs.type == 'release' }}
     uses: ./.github/workflows/cd-release.yml
     secrets: inherit
 
   pull-request:
-    if: ${{ env.type == 'snapshot' }}
+    needs: [snapshot, set-outputs]
+    if: ${{ needs.set-outputs.outputs.type == 'snapshot' }}
     uses: ./.github/workflows/ci-pull-request.yml
-    needs: snapshot
     secrets: inherit
     with:
       type: Release

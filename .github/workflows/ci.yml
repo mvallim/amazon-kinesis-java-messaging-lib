@@ -12,9 +12,9 @@ on:
     - "**/LICENSE"
 
 env:
-  type: ${{ startsWith(github.ref, 'refs/heads/feature') && 'Feature' || 'Fix'}}
-  labels: ${{ startsWith(github.ref, 'refs/heads/feature') && 'automatic,feature' || 'automatic,fix' }}
-  target-branch: develop
+  TYPE: ${{ startsWith(github.ref, 'refs/heads/feature') && 'Feature' || 'Fix'}}
+  LABELS: ${{ startsWith(github.ref, 'refs/heads/feature') && 'automatic,feature' || 'automatic,fix' }}
+  TARGET_BRANCH: develop
 
 permissions:
   contents: write
@@ -23,6 +23,20 @@ permissions:
   pull-requests: write
 
 jobs:
+  set-outputs:
+    runs-on: ubuntu-latest
+    outputs:
+      type: ${{ steps.environment.outputs.type }}
+      labels: ${{ steps.environment.outputs.labels }}
+      target-branch: ${{ steps.environment.outputs.target-branch }}
+    steps:
+      - id: environment
+        name: Set output environment passed to the reusable workflow
+        run: |
+          echo "type=$TYPE" >> $GITHUB_OUTPUT
+          echo "labels=$LABELS" >> $GITHUB_OUTPUT
+          echo "target-branch=$TARGET_BRANCH" >> $GITHUB_OUTPUT
+
   ci:
     uses: ./.github/workflows/ci-maven.yml
     secrets: inherit
@@ -35,9 +49,9 @@ jobs:
   
   pull-request:
     uses: ./.github/workflows/ci-pull-request.yml
-    needs: gates
+    needs: [gates, set-outputs]
     secrets: inherit
     with:
-      type: ${{ env.type }}
-      labels: ${{ env.labels }}
-      target-branch: ${{ env.target-branch }}
+      type: ${{ needs.set-outputs.outputs.type }}
+      labels: ${{ needs.set-outputs.outputs.labels }}
+      target-branch: ${{ needs.set-outputs.outputs.target-branch }}
