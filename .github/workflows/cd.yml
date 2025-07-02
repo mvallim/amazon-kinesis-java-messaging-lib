@@ -28,19 +28,19 @@ jobs:
     secrets: inherit
 
   snapshot:
-    if: ${{ github.env.type == 'snapshot' }}
+    if: ${{ env.type == 'snapshot' }}
     needs: gates
     uses: ./.github/workflows/cd-snapshot.yml
     secrets: inherit
 
   release:
-    if: ${{ github.env.type == 'release' }}
+    if: ${{ env.type == 'release' }}
     needs: gates
     uses: ./.github/workflows/cd-release.yml
     secrets: inherit
 
   pull-request:
-    if: ${{ github.env.type == 'snapshot' }}
+    if: ${{ env.type == 'snapshot' }}
     uses: ./.github/workflows/ci-pull-request.yml
     needs: snapshot
     secrets: inherit

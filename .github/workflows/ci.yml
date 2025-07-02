@@ -38,6 +38,6 @@ jobs:
     needs: gates
     secrets: inherit
     with:
-      type: ${{ github.env.type }}
-      labels: ${{ github.env.labels }}
-      target-branch: ${{ github.env.target-branch }}
+      type: ${{ env.type }}
+      labels: ${{ env.labels }}
+      target-branch: ${{ env.target-branch }}
