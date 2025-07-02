@@ -85,7 +85,7 @@ class RingBufferBlockingQueueTest {
   }
 
   @Test
-  void testSuccessWhenIsEmpty() throws InterruptedException {
+  void testSuccessWhenIsEmpty() {
     final RingBufferBlockingQueue<RequestEntry<Integer>> ringBlockingQueue = spy(new RingBufferBlockingQueue<>());
 
     final ExecutorService producer = Executors.newSingleThreadExecutor();
@@ -114,7 +114,7 @@ class RingBufferBlockingQueueTest {
   }
 
   @Test
-  void testSuccessWhenIsFull() throws InterruptedException {
+  void testSuccessWhenIsFull() {
     final RingBufferBlockingQueue<RequestEntry<Integer>> ringBlockingQueue = spy(new RingBufferBlockingQueue<>(1));
 
     final ExecutorService producer = Executors.newSingleThreadExecutor();
