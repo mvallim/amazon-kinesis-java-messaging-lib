@@ -4,6 +4,7 @@ on:
   push:
       branches:
       - master
+      - develop
 
 permissions:
   contents: read
@@ -11,10 +12,12 @@ permissions:
 
 jobs:
   snapshot:
+    if: startsWith(github.ref, 'refs/heads/develop')
     uses: ./.github/workflows/cd-snapshot.yml
     secrets: inherit
 
   release:
+    if: startsWith(github.ref, 'refs/heads/master')
     uses: ./.github/workflows/cd-release.yml
     secrets: inherit
 
