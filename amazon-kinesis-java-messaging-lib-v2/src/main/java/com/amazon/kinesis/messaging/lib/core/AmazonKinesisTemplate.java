@@ -43,7 +43,7 @@ public class AmazonKinesisTemplate<E> extends AbstractAmazonKinesisTemplate<Kine
       final UnaryOperator<PutRecordsRequest> publishDecorator) {
     super(
       new AmazonKinesisProducer<>(pendingRequests, streamRequests, Executors.newSingleThreadExecutor()),
-      new AmazonKinesisConsumer<>(amazonKinesisClient, streamProperty, objectMapper, pendingRequests, streamRequests, getAmazonKinesisThreadPoolExecutor(streamProperty), publishDecorator)
+      new AmazonKinesisConsumer<>(amazonKinesisClient, streamProperty, objectMapper, pendingRequests, streamRequests, getAmazonKinesisThreadPoolExecutor(), publishDecorator)
     );
   }
 
