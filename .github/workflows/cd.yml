@@ -14,14 +14,24 @@ permissions:
   pull-requests: write
 
 jobs:
+  ci:
+    uses: ./.github/workflows/ci-maven.yml
+    secrets: inherit
+
+  gates:
+    uses: ./.github/workflows/ci-gates.yml
+    if: success()
+    needs: ci
+    secrets: inherit
+
   snapshot:
     if: ${{ github.ref == 'refs/heads/develop' }}
+    needs: gates
     uses: ./.github/workflows/cd-snapshot.yml
     secrets: inherit
 
   release:
     if: ${{ github.ref == 'refs/heads/master' }}
+    needs: gates
     uses: ./.github/workflows/cd-release.yml
     secrets: inherit
-
-
