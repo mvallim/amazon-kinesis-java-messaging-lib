@@ -21,7 +21,6 @@ import java.util.concurrent.CompletableFuture;
 import com.amazon.kinesis.messaging.lib.model.RequestEntry;
 import com.amazon.kinesis.messaging.lib.model.ResponseFailEntry;
 import com.amazon.kinesis.messaging.lib.model.ResponseSuccessEntry;
-import com.amazon.kinesis.messaging.lib.model.StreamProperty;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +46,7 @@ abstract class AbstractAmazonKinesisTemplate<C, R, O, E> {
     return amazonKinesisConsumer.await();
   }
 
-  protected static AmazonKinesisThreadPoolExecutor getAmazonKinesisThreadPoolExecutor(final StreamProperty topicProperty) {
+  protected static AmazonKinesisThreadPoolExecutor getAmazonKinesisThreadPoolExecutor() {
     return new AmazonKinesisThreadPoolExecutor(1);
   }
 
