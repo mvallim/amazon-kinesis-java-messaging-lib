@@ -3,7 +3,6 @@ name: Publish && Release
 on:
   push:
     branches:
-    - master
     - develop
 
 permissions:
@@ -25,13 +24,15 @@ jobs:
     secrets: inherit
 
   snapshot:
-    if: ${{ github.ref == 'refs/heads/develop' }}
     needs: gates
     uses: ./.github/workflows/cd-snapshot.yml
     secrets: inherit
 
-  release:
-    if: ${{ github.ref == 'refs/heads/master' }}
-    needs: gates
-    uses: ./.github/workflows/cd-release.yml
+  pull-request:
+    uses: ./.github/workflows/ci-pull-request.yml
+    needs: snapshot
     secrets: inherit
+    with:
+      type: Release
+      labels: automatic,release
+      target-branch: master
