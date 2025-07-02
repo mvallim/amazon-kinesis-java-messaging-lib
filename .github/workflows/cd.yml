@@ -1,9 +1,10 @@
-name: Publish && Release
+name: Snapshot && Release
 
 on:
   push:
     branches:
     - develop
+    - master
 
 permissions:
   contents: read
@@ -11,6 +12,9 @@ permissions:
   actions: read
   security-events: write
   pull-requests: write
+
+env:
+  type: ${{ startsWith(github.ref, 'refs/heads/develop') && 'snapshot' || 'release'}}
 
 jobs:
   ci:
@@ -24,11 +28,19 @@ jobs:
     secrets: inherit
 
   snapshot:
+    if: ${{ github.env.type == 'snapshot' }}
     needs: gates
     uses: ./.github/workflows/cd-snapshot.yml
     secrets: inherit
 
+  release:
+    if: ${{ github.env.type == 'release' }}
+    needs: gates
+    uses: ./.github/workflows/cd-release.yml
+    secrets: inherit
+
   pull-request:
+    if: ${{ github.env.type == 'snapshot' }}
     uses: ./.github/workflows/ci-pull-request.yml
     needs: snapshot
     secrets: inherit

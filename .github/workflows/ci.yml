@@ -3,12 +3,18 @@ name: Build and Pull Request
 on:
   push:
     branches:
-    - fix**
+    - feature/**
+    - fix/**
     paths-ignore:
     - "**/README.md"
     - "**/CONTRIBUTING.md"
     - "**/CONTRIBUTORS.txt"
     - "**/LICENSE"
+
+env:
+  type: ${{ startsWith(github.ref, 'refs/heads/feature') && 'Feature' || 'Fix'}}
+  labels: ${{ startsWith(github.ref, 'refs/heads/feature') && 'automatic,feature' || 'automatic,fix' }}
+  target-branch: develop
 
 permissions:
   contents: write
@@ -32,6 +38,6 @@ jobs:
     needs: gates
     secrets: inherit
     with:
-      type: Fix
-      labels: automatic,fix
-      target-branch: develop
+      type: ${{ github.env.type }}
+      labels: ${{ github.env.labels }}
+      target-branch: ${{ github.env.target-branch }}
