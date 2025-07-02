@@ -37,7 +37,7 @@ You can pull it from the central Maven repositories:
 <dependency>
     <groupId>com.github.mvallim</groupId>
     <artifactId>amazon-kinesis-java-messaging-lib-v1</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
@@ -46,7 +46,7 @@ You can pull it from the central Maven repositories:
 <dependency>
     <groupId>com.github.mvallim</groupId>
     <artifactId>amazon-kinesis-java-messaging-lib-v2</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
@@ -56,7 +56,7 @@ If you want to try a snapshot version, add the following repository:
 <repository>
     <id>sonatype-snapshots</id>
     <name>Sonatype Snapshots</name>
-    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    <url>https://central.sonatype.com/repository/maven-snapshots</url>
     <snapshots>
         <enabled>true</enabled>
     </snapshots>
@@ -67,12 +67,12 @@ If you want to try a snapshot version, add the following repository:
 
 ### For AWS SDK v1
 ```groovy
-implementation 'com.github.mvallim:amazon-kinesis-java-messaging-lib-v1:1.0.6'
+implementation 'com.github.mvallim:amazon-kinesis-java-messaging-lib-v1:1.0.0'
 ```
 
 ### For AWS SDK v2
 ```groovy
-implementation 'com.github.mvallim:amazon-kinesis-java-messaging-lib-v2:1.0.6'
+implementation 'com.github.mvallim:amazon-kinesis-java-messaging-lib-v2:1.0.0'
 ```
 
 If you want to try a snapshot version, add the following repository:
@@ -80,7 +80,7 @@ If you want to try a snapshot version, add the following repository:
 ```groovy
 repositories {
     maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
+        url "https://central.sonatype.com/repository/maven-snapshots"
     }
 }
 ```

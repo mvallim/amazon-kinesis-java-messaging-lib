@@ -20,7 +20,7 @@ jobs:
         commit-message: Auto Pull Request
         body: Auto-created Pull Request
         branch: ${{ github.ref }}
-        base: master
+        base: develop
         labels: automatic,feature
         assignees: ${{ github.actor }}
         reviewers: mvallim
@@ -35,7 +35,7 @@ jobs:
         commit-message: Auto Pull Request
         body: Auto-created Pull Request
         branch: ${{ github.ref }}
-        base: master
+        base: develop
         labels: automatic,fix
         assignees: ${{ github.actor }}
         reviewers: mvallim

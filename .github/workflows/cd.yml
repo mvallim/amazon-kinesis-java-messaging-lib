@@ -4,17 +4,23 @@ on:
   push:
       branches:
       - master
+      - develop
 
 permissions:
   contents: read
   packages: write
+  actions: read
+  security-events: write
+  pull-requests: write
 
 jobs:
   snapshot:
+    if: ${{ github.ref == 'refs/heads/develop' }}
     uses: ./.github/workflows/cd-snapshot.yml
     secrets: inherit
 
   release:
+    if: ${{ github.ref == 'refs/heads/master' }}
     uses: ./.github/workflows/cd-release.yml
     secrets: inherit
 
