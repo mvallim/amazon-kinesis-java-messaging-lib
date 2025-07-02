@@ -2,14 +2,14 @@ name: Build and Pull Request
 
 on:
   push:
-      branches:
-      - feature**
-      - fix**
-      paths-ignore:
-      - "**/README.md"
-      - "**/CONTRIBUTING.md"
-      - "**/CONTRIBUTORS.txt"
-      - "**/LICENSE"
+    branches:
+    - feature**
+    - fix**
+    paths-ignore:
+    - "**/README.md"
+    - "**/CONTRIBUTING.md"
+    - "**/CONTRIBUTORS.txt"
+    - "**/LICENSE"
 
 permissions:
   contents: write
