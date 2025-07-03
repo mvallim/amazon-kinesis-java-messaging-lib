@@ -297,7 +297,7 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<useReleaseProfile>false</useReleaseProfile>
+					<useReleaseProfile>true</useReleaseProfile>
 					<releaseProfiles>sonatype-central</releaseProfiles>
 				</configuration>
 			</plugin>
@@ -485,7 +485,7 @@
 						<artifactId>central-publishing-maven-plugin</artifactId>
 						<extensions>true</extensions>
 						<configuration>
-							<publishingServerId>central</publishingServerId>
+							<publishingServerId>sonatype-central</publishingServerId>
 							<autoPublish>false</autoPublish>
 						</configuration>
 					</plugin>
@@ -513,7 +513,6 @@
 							</execution>
 						</executions>
 					</plugin>
-
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
