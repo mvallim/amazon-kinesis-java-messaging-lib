@@ -40,14 +40,18 @@ jobs:
   snapshot:
     needs: [gates, set-outputs]
     if: ${{ needs.set-outputs.outputs.type == 'snapshot' }}
-    uses: ./.github/workflows/cd-snapshot.yml
+    uses: ./.github/workflows/cd-deploy.yml
     secrets: inherit
+    with:
+      environment: ${{ needs.set-outputs.outputs.type }}
 
   release:
     needs: [gates, set-outputs]
     if: ${{ needs.set-outputs.outputs.type == 'release' }}
-    uses: ./.github/workflows/cd-release.yml
+    uses: ./.github/workflows/cd-deploy.yml
     secrets: inherit
+    with:
+      environment: ${{ needs.set-outputs.outputs.type }}
 
   pull-request:
     needs: [snapshot, set-outputs]

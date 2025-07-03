@@ -42,14 +42,15 @@ jobs:
     secrets: inherit
 
   gates:
-    uses: ./.github/workflows/ci-gates.yml
-    if: success()
     needs: ci
+    if: success()
+    uses: ./.github/workflows/ci-gates.yml
     secrets: inherit
   
   pull-request:
-    uses: ./.github/workflows/ci-pull-request.yml
     needs: [gates, set-outputs]
+    if: success()
+    uses: ./.github/workflows/ci-pull-request.yml
     secrets: inherit
     with:
       type: ${{ needs.set-outputs.outputs.type }}
