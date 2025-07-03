@@ -3,13 +3,13 @@ name: Build and Pull Request
 on:
   push:
     branches:
-    - feature/**
-    - fix/**
+      - feature/**
+      - fix/**
     paths-ignore:
-    - "**/README.md"
-    - "**/CONTRIBUTING.md"
-    - "**/CONTRIBUTORS.txt"
-    - "**/LICENSE"
+      - "**/README.md"
+      - "**/CONTRIBUTING.md"
+      - "**/CONTRIBUTORS.txt"
+      - "**/LICENSE"
 
 env:
   TYPE: ${{ startsWith(github.ref, 'refs/heads/feature') && 'Feature' || 'Fix'}}
