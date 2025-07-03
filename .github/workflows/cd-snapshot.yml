@@ -27,7 +27,7 @@ jobs:
           git config user.name "GitHub Actions"
 
       - name: Publish Snapshot to the Maven Central Repository
-        run: mvn clean deploy -P sonatype-central
+        run: mvn clean deploy -P snapshot
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
