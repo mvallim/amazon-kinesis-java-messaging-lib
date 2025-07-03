@@ -2,10 +2,15 @@ name: Publish package to the Maven Central Repository
 
 on:
   workflow_call:
+    inputs:
+      environment:
+        description: Environment
+        type: string
+        required: true
 
 jobs:
   publish:
-    environment: snapshot
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -27,7 +32,22 @@ jobs:
           git config user.name "GitHub Actions"
 
       - name: Publish Snapshot to the Maven Central Repository
-        run: mvn clean deploy -P sonatype-central
+        if: ${{ inputs.environment == 'snapshot' }}
+        run: |
+          mvn clean deploy -P snapshot
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+
+      - name: Publish Release to the Maven Central Repository
+        if: ${{ inputs.environment == 'release' }}
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version | grep -e '^[^\[]' | grep -Eo grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+          RELEASE_VERSION=${VERSION}
+          RELEASE_TAG=v${RELEASE_VERSION}
+
+          mvn -B release:prepare release:perform -DreleaseVersion=${RELEASE_VERSION} -Dtag=${RELEASE_TAG} -P release
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
