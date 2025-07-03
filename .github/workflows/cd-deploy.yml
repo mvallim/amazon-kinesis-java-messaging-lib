@@ -43,7 +43,7 @@ jobs:
       - name: Publish Release to the Maven Central Repository
         if: ${{ inputs.environment == 'release' }}
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version | grep -e '^[^\[]' | grep -Eo grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+          VERSION=$(mvn help:evaluate -Dexpression=project.version | grep -e '^[^\[]' | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
           RELEASE_VERSION=${VERSION}
           RELEASE_TAG=v${RELEASE_VERSION}
 
