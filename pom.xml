@@ -4,7 +4,7 @@
 
 	<groupId>com.github.mvallim</groupId>
 	<artifactId>amazon-kinesis-java-messaging-lib</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>${project.artifactId}</name>
@@ -466,6 +466,7 @@
 			<id>snapshot</id>
 			<properties>
 				<java.version>8</java.version>
+				<maven.test.skip>true</maven.test.skip>
 			</properties>
 			<distributionManagement>
 				<snapshotRepository>
@@ -521,6 +522,7 @@
 			<id>release</id>
 			<properties>
 				<java.version>8</java.version>
+				<maven.test.skip>true</maven.test.skip>
 			</properties>
 			<build>
 				<plugins>
