@@ -11,4 +11,6 @@
 
 	<artifactId>amazon-kinesis-java-messaging-lib-template</artifactId>
 
+	<name>${project.artifactId}</name>
+
 </project>
