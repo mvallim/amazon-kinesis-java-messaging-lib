@@ -17,9 +17,6 @@ env:
   TARGET_BRANCH: develop
 
 permissions:
-  contents: write
-  actions: read
-  security-events: write
   pull-requests: write
 
 jobs:
