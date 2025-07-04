@@ -546,6 +546,9 @@
 						<configuration>
 							<autoVersionSubmodules>true</autoVersionSubmodules>
 							<useReleaseProfile>false</useReleaseProfile>
+							<pushChanges>false</pushChanges>
+							<releaseVersion>${env.RELEASE_VERSION}</releaseVersion>
+							<tag>${env.RELEASE_TAG}</tag>
 						</configuration>
 					</plugin>
 					<plugin>
