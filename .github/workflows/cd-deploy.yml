@@ -30,8 +30,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-deploy-${{ hashFiles('**/pom.xml') }}-${{ matrix.java-version }}
-          restore-keys: ${{ runner.os }}-deploy-${{ hashFiles('**/pom.xml') }}-${{ matrix.java-version }}
+          key: ${{ runner.os }}-deploy-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-deploy-${{ hashFiles('**/pom.xml') }}
 
       - id: variables
         name: Set output variables
@@ -59,15 +59,12 @@ jobs:
       - name: Publish Release to the Maven Central Repository
         if: ${{ inputs.environment == 'release' }}
         run: |
-          mvn -B release:prepare release:perform -P release
+          mvn -B release:prepare -P release
+          git push origin tag $RELEASE_TAG
+          mvn -B release:perform -P release
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
           RELEASE_VERSION: ${{ steps.variables.outputs.release-version }}
           RELEASE_TAG: ${{ steps.variables.outputs.release-tag }}
-
-      - name: Push Git Tag
-        if: ${{ inputs.environment == 'release' }}
-        run: |
-          git push origin ${{ steps.variables.outputs.release-tag }}
