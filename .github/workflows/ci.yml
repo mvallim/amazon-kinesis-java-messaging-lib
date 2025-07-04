@@ -12,8 +12,8 @@ on:
       - "**/LICENSE"
 
 env:
-  TYPE: ${{ startsWith(github.ref, 'refs/heads/feature') && 'Feature' || 'Fix'}}
-  LABELS: ${{ startsWith(github.ref, 'refs/heads/feature') && 'automatic,feature' || 'automatic,fix' }}
+  TYPE: ${{ startsWith(github.ref_name, 'feature') && 'Feature' || 'Fix'}}
+  LABELS: ${{ startsWith(github.ref_name, 'feature') && 'automatic,feature' || 'automatic,fix' }}
   TARGET_BRANCH: develop
 
 permissions:

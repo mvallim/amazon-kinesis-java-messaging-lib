@@ -33,15 +33,6 @@ jobs:
           key: ${{ runner.os }}-deploy-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-deploy-${{ hashFiles('**/pom.xml') }}
 
-      - id: variables
-        name: Set output variables
-        run: |
-          RELEASE_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec | grep -e '^[^\[]' | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
-          RELEASE_TAG=v${RELEASE_VERSION}
-
-          echo "release-version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
-          echo "release-tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
-
       - name: Configure Git user
         run: |
           git config user.email "actions@github.com"
@@ -56,6 +47,16 @@ jobs:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
 
+      - id: release-vars
+        if: ${{ inputs.environment == 'release' }}
+        name: Set output variables
+        run: |
+          RELEASE_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec | grep -e '^[^\[]' | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+          RELEASE_TAG=v${RELEASE_VERSION}
+
+          echo "release-version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
+          echo "release-tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
+
       - name: Publish Release to the Maven Central Repository
         if: ${{ inputs.environment == 'release' }}
         run: |
@@ -66,5 +67,12 @@ jobs:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
-          RELEASE_VERSION: ${{ steps.variables.outputs.release-version }}
-          RELEASE_TAG: ${{ steps.variables.outputs.release-tag }}
+          RELEASE_VERSION: ${{ steps.release-vars.outputs.release-version }}
+          RELEASE_TAG: ${{ steps.release-vars.outputs.release-tag }}
+
+      - name: Create Release
+        if: ${{ inputs.environment == 'release' }}
+        run: |
+          gh release create ${RELEASE_TAG} --generate-notes  
+        env:
+          RELEASE_TAG: ${{ steps.release-vars.outputs.release-tag }}
