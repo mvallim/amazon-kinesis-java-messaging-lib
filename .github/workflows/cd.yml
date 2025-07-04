@@ -9,10 +9,7 @@ on:
       - closed
 
 permissions:
-  contents: read
-  packages: write
-  actions: read
-  security-events: write
+  contents: write
   pull-requests: write
 
 env:
