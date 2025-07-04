@@ -32,8 +32,8 @@ jobs:
           RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version | grep -e '^[^\[]' | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
           RELEASE_TAG=v${RELEASE_VERSION}
 
-          echo "release-version=${RELEASE_VERSION}" >> $GITHUB_OUTPUT
-          echo "release-tag=${RELEASE_TAG}" >> $GITHUB_OUTPUT
+          echo "release-version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
+          echo "release-tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
 
       - name: Configure Git user
         run: |
