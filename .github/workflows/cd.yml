@@ -1,10 +1,12 @@
 name: Snapshot && Release
 
 on:
-  push:
+  pull_request_target:
     branches:
-    - develop
-    - master
+      - develop
+      - master
+    types:
+      - closed
 
 permissions:
   contents: read
@@ -28,6 +30,7 @@ jobs:
           echo "type=$TYPE" >> $GITHUB_OUTPUT
           
   ci:
+    if: ${{ github.event.pull_request.merged == true }}
     uses: ./.github/workflows/ci-maven.yml
     secrets: inherit
 
