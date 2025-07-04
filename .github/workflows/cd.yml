@@ -13,7 +13,7 @@ permissions:
   pull-requests: write
 
 env:
-  TYPE: ${{ startsWith(github.ref, 'refs/heads/develop') && 'snapshot' || 'release'}}
+  TYPE: ${{ startsWith(github.ref_name, 'develop') && 'snapshot' || 'release'}}
 
 jobs:
   set-outputs:
