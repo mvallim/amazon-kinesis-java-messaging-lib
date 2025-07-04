@@ -76,3 +76,4 @@ jobs:
           gh release create ${RELEASE_TAG} --generate-notes  
         env:
           RELEASE_TAG: ${{ steps.release-vars.outputs.release-tag }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
