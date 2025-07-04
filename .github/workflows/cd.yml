@@ -29,20 +29,19 @@ jobs:
         run: |
           echo "type=$TYPE" >> $GITHUB_OUTPUT
           
-  # ci:
-  #   if: ${{ github.event.pull_request.merged == true }}
-  #   uses: ./.github/workflows/ci-maven.yml
-  #   secrets: inherit
+  ci:
+    if: ${{ github.event.pull_request.merged == true }}
+    uses: ./.github/workflows/ci-maven.yml
+    secrets: inherit
 
-  # gates:
-  #   needs: ci
-  #   if: success()
-  #   uses: ./.github/workflows/ci-gates.yml
-  #   secrets: inherit
+  gates:
+    needs: ci
+    if: success()
+    uses: ./.github/workflows/ci-gates.yml
+    secrets: inherit
 
   snapshot:
-    # needs: [gates, set-outputs]
-    needs: [set-outputs]
+    needs: [gates, set-outputs]
     if: ${{ needs.set-outputs.outputs.type == 'snapshot' }}
     uses: ./.github/workflows/cd-deploy.yml
     secrets: inherit
@@ -50,8 +49,7 @@ jobs:
       environment: ${{ needs.set-outputs.outputs.type }}
 
   release:
-    # needs: [gates, set-outputs]
-    needs: [set-outputs]
+    needs: [gates, set-outputs]
     if: ${{ needs.set-outputs.outputs.type == 'release' }}
     uses: ./.github/workflows/cd-deploy.yml
     secrets: inherit
