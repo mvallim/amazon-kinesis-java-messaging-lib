@@ -43,6 +43,8 @@
 		<maven-resources-plugin.version>3.3.0</maven-resources-plugin.version>
 		<maven-source-plugin.version>3.2.1</maven-source-plugin.version>
 		<maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+		<maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
 		<jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
 		<sonar-maven-plugin.version>4.0.0.4121</sonar-maven-plugin.version>
 		<central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
@@ -71,9 +73,9 @@
 	</modules>
 
 	<scm>
-		<url>scm:git:git@github.com:mvallim/amazon-kinesis-java-messaging-lib</url>
-		<connection>scm:git:git@github.com:mvallim/amazon-kinesis-java-messaging-lib</connection>
-		<developerConnection>scm:git:git@github.com:mvallim/amazon-kinesis-java-messaging-lib</developerConnection>
+		<url>scm:git:https://github.com/mvallim/amazon-kinesis-java-messaging-lib.git</url>
+		<connection>scm:git:https://github.com/mvallim/amazon-kinesis-java-messaging-lib.git</connection>
+		<developerConnection>scm:git:https://github.com/mvallim/amazon-kinesis-java-messaging-lib.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -272,6 +274,16 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>${maven-surefire-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven-javadoc-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>${maven-gpg-plugin.version}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.jacoco</groupId>
