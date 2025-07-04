@@ -57,13 +57,18 @@ jobs:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push Git Tag
         if: ${{ inputs.environment == 'release' }}
         run: |
           git push origin ${{ steps.variables.outputs.release-tag }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push Git next development iteration
         if: ${{ inputs.environment == 'release' }}
         run: |
           git push origin
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
