@@ -243,6 +243,7 @@ We use [GitHub](https://github.com/mvallim/amazon-kinesis-java-messaging-lib) fo
 
 See also the list of [contributors](CONTRIBUTORS.txt) who participated in this project.
 
+
 ## License
 
 This project is licensed under the Apache License - see the [LICENSE](LICENSE) file for details
